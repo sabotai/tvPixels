@@ -1,8 +1,8 @@
 
 import processing.video.*;
 
+boolean finished;
 
-int videoScale = 4;
 int cols, rows;
 Capture video, tv;
 
@@ -17,7 +17,7 @@ void setup() {
   cols = 160;
   rows = 120;
   
-//  video = new Capture(this, cols, rows,30);
+//  video = new Capture(this, cols, rows,10);
 //  video.start();
 
       tv = new Capture(this, cols, rows,30);
@@ -27,9 +27,17 @@ void setup() {
   
     Television myTeevees = new Television();
   teevees.add(myTeevees);
+  
+  
+  // thread("noiseBG");
 }  
 
 void draw() {
+  //scale(2.0,2.0);
+  println(frameRate);
+  
+        strokeWeight(1);
+  
   background(0);
   
   if (tv.available()) {
@@ -37,30 +45,33 @@ void draw() {
   }
   tv.loadPixels();
   
-  for (int xx=0; xx < width; xx++) {
-    float noiseScale = 1;
+  
+  for (int xx = 0; xx < width; xx++) {
+    float noiseScale = 5 * frameCount;
     float noiseVal = noise((mouseX+xx)*noiseScale, 
                             mouseY*noiseScale);
+    //float noiseVal = noise((mouseX+xx)*noiseScale, 
+    //                        mouseY*noiseScale);
     stroke(noiseVal*255);
-    line(xx, mouseY+noiseVal*80, xx, height);
+    line(xx, mouseY+noiseVal*240, xx, height);
   }
 
 
-    
-
-
-  for (int i = 0; i < teevees.size(); i++){
-    Television t = (Television) teevees.get(i);
-    if (i == 0){ 
-        t.xPos = mouseX;
-        t.yPos = mouseY;
-      }
-    //image(man, 0, 0);
-    if (teevees.size() > 0){
-      t.run();
-    }
-  }
   
+     //thread("noiseBG");
+    for (int i = 0; i < teevees.size(); i++){
+      Television t = (Television) teevees.get(i);
+      if (i == 0){ 
+          t.xPos = mouseX;
+          t.yPos = mouseY;
+        }
+      //image(man, 0, 0);
+      if (teevees.size() > 0){
+        t.run();
+      }
+    }
+    
+    
 }
 
 void mouseClicked(){
@@ -73,4 +84,8 @@ void mouseClicked(){
 
 void keyPressed(){
  which = !which; 
+}
+
+void noiseBG(){
+
 }
