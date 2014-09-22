@@ -17,7 +17,7 @@ class Television {
     oddLine = false;
     interlaceSet = true;
     lines = 2;
-    changeLimit = 5;
+    changeLimit = 15;
     threshold = 70;
 
 
@@ -57,13 +57,17 @@ class Television {
         newHue = newBright;
         float lrg = 2 * videoScale; //old = 23
         float sml = 1 * videoScale; //old = 20
-        float corners = 0.4 * videoScale; //old = 3
-        // println("sz = " + sz);
+        float corners = 0.3 * videoScale; //old = 3
+        
+        color altColor = color(newHue, 80, 255);
 
         if (newHue - oldPixel[loc] < threshold) { //IF NO MOVEMENT
 
           if ((changeCount[loc] > 0) && (changeCount[loc] < changeLimit)) {  
             changeCount[loc]++;
+            float progress = float(changeCount[loc]) / float(changeLimit);
+            //println("change is " + changeCount[loc]);
+            altColor = lerpColor(altColor, c, progress);
           } else {
             changeCount[loc] = 0;
           }
@@ -84,26 +88,17 @@ class Television {
             //println("alt colors");  
             if (interlaceSet) {
 
-              if ((j % lines == 0)) {// && (j % 2 == 0)){
-                //evenLine = true; 
-                //println("even J is " + j);
-                fill(newHue, 80, 255);
+              if ((j % lines == 0)) {
+                fill(altColor);
                 rect(testX, testY, lrg, lrg, corners);
 
                 fill(newHue, 100, 255);
-                //rect(testX,testY, sz, sz, corners);
               }
             } else {
-              //if ((j % 2 != 0) && (i % 2 != 0)){
-
-              if ((j % lines != 0)) {// && (j % 2 != 0)){
-                //println("odd J is " + j);
-                fill(newHue, 80, 255);
+              if ((j % lines != 0)) {
+                fill(altColor);
                 rect(testX, testY, lrg, lrg, corners);
                 
-                
-                fill(newHue, 100, 255);
-                //rect(testX,testY, sz, sz, corners);
               }
             }
           } else { // REGULAR COLORS
@@ -129,31 +124,16 @@ class Television {
           
         } else { // BLACK AND WHITE
           if (interlaceSet) {
-            if ((j % lines == 0)) {// && (j % 2 == 0)){
-              //evenLine = true; 
-              //println("even J is " + j);
+            if ((j % lines == 0)) {
               fill(newBright);
               rect(testX, testY, lrg, lrg, corners);
 
-              //fill(newBright, 200);
-              //rect(testX,testY,sml,sml,corners);
-
-              //fill(newBright, 255);
-              //rect(testX,testY, sz, sz, corners);
             }
           } else {
-            //if ((j % 2 != 0) && (i % 2 != 0)){
-
-            if ((j % lines != 0)) {// && (j % 2 != 0)){
-              //println("odd J is " + j);
+            if ((j % lines != 0)) {
               fill(newBright);
               rect(testX, testY, lrg, lrg, corners);
 
-              //fill(newBright);
-              //rect(testX,testY,sml,sml,corners);
-
-              //fill(newBright);
-              //rect(testX,testY, sz, sz, corners);
             }
           }
         }

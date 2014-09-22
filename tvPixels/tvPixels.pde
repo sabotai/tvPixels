@@ -13,7 +13,7 @@ boolean which;
 
 void setup() {
   size(1920, 1440);
-  
+  which = true;
   cols = 160;
   rows = 120;
   
@@ -34,7 +34,7 @@ void setup() {
 
 void draw() {
   scale(1.0,1.0);
-  println(frameRate);
+  //println(frameRate);
   
         strokeWeight(1);
   
