@@ -39,6 +39,7 @@ class Television {
         int y = j * videoScale;
         int loc = i + j * tv.width;  
         color c = tv.pixels[loc];
+        c = color(hue(c), saturation(c), brightness(c) * 1.5); //it was too dark
         float sz = (brightness(c)/255.0)*videoScale * 3;
 
         rectMode(CENTER);
@@ -56,7 +57,7 @@ class Television {
         newHue = newBright;
         float lrg = 2 * videoScale; //old = 23
         float sml = 1 * videoScale; //old = 20
-        float corners = 0.5 * videoScale; //old = 3
+        float corners = 0.4 * videoScale; //old = 3
         // println("sz = " + sz);
 
         if (newHue - oldPixel[loc] < threshold) { //IF NO MOVEMENT
@@ -80,39 +81,42 @@ class Television {
 
         if (which) {
           if (changeCount[loc] > 0) {
-            println("alt colors");  
+            //println("alt colors");  
             if (interlaceSet) {
 
               if ((j % lines == 0)) {// && (j % 2 == 0)){
                 //evenLine = true; 
                 //println("even J is " + j);
-                fill(newHue, 80, 150);
+                fill(newHue, 80, 255);
                 rect(testX, testY, lrg, lrg, corners);
 
                 fill(newHue, 100, 255);
-                rect(testX,testY, sz, sz, corners);
+                //rect(testX,testY, sz, sz, corners);
               }
             } else {
               //if ((j % 2 != 0) && (i % 2 != 0)){
 
               if ((j % lines != 0)) {// && (j % 2 != 0)){
                 //println("odd J is " + j);
-                fill(newHue, 80, 150);
+                fill(newHue, 80, 255);
                 rect(testX, testY, lrg, lrg, corners);
                 
                 
                 fill(newHue, 100, 255);
-                rect(testX,testY, sz, sz, corners);
+                //rect(testX,testY, sz, sz, corners);
               }
             }
           } else { // REGULAR COLORS
-            println("reg colors");
+            //println("reg colors");
             if (interlaceSet) {
               fill(hue(c), saturation(c),brightness(c));
+              
+              
               if ((j % lines == 0)) {
                 rect(testX, testY, lrg, lrg, corners);
               }
             } else {
+              fill(hue(c), saturation(c),brightness(c));
               if ((j % lines != 0)) {
                 rect(testX, testY, lrg, lrg, corners);
               }

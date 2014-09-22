@@ -28,12 +28,12 @@ void setup() {
     Television myTeevees = new Television();
   teevees.add(myTeevees);
   
-  
+  noSmooth();
   // thread("noiseBG");
 }  
 
 void draw() {
-  //scale(2.0,2.0);
+  scale(1.0,1.0);
   println(frameRate);
   
         strokeWeight(1);
