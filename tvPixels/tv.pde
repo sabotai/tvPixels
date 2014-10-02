@@ -93,7 +93,6 @@ if (visible) {
 
 
 
-
       if (newHue - oldPixel[loc] < threshold) { //IF NO MOVEMENT
 
         if ((changeCount[loc] > 0) && (changeCount[loc] < changeLimit)) {  

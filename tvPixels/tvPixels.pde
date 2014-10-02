@@ -13,6 +13,7 @@ OpenCV opencv;
 OpenCV eyecv;
 
 int objectCount;
+boolean frame;
 
 ArrayList<Television> teevees = new ArrayList();
 boolean which;
@@ -43,9 +44,12 @@ void setup() {
 
   noSmooth();
   // thread("noiseBG");
+        strokeCap(PROJECT);
 }  
 
 void draw() {
+  if (frame){
+  println(frameRate);}
   scale(1.0, 1.0);
   //println(frameRate);
 
@@ -69,7 +73,6 @@ void draw() {
 
         float noiseVal = noise(random(0,width)*noiseScale, random(0,height)*noiseScale);
         stroke(noiseVal*255);
-        strokeCap(PROJECT);
         strokeWeight(noisePixel);
         line(xx*noisePixel, yy*noisePixel, xx*noisePixel, yy*noisePixel);
       }
@@ -111,7 +114,12 @@ void mouseClicked() {
 }
 
 void keyPressed() {
+  
+  if(keyCode == ALT){
   which = !which;
+  } else{ if (keyCode == SHIFT){
+   frame = !frame; 
+  }}
 }
 
 void noiseBG() {
