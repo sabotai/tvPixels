@@ -20,9 +20,18 @@ boolean which;
 
 void setup() {
   size(1920, 1440);
+   String[] cameras = Capture.list();
+
+  if (cameras.length == 0) {
+    println("There are no cameras available for capture.");
+    exit();
+  } else {
+    println("Available cameras:");
+    printArray(cameras);
+  }
   which = true;
-  cols = 160;
-  rows = 120;
+  cols = 320;
+  rows = 180;
 
   opencv = new OpenCV(this, cols, rows);
   opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE); 
@@ -39,7 +48,7 @@ void setup() {
 
   colorMode(HSB);
 
-  Television myTeevees = new Television();
+  Television myTeevees = new Television(cols, rows);
   teevees.add(myTeevees);
 
   noSmooth();
@@ -106,7 +115,7 @@ void draw() {
 }
 
 void mouseClicked() {
-  Television myTeevees = new Television();
+  Television myTeevees = new Television(cols, rows);
   myTeevees.init();
   teevees.add(myTeevees); 
 
@@ -124,4 +133,3 @@ void keyPressed() {
 
 void noiseBG() {
 }
-

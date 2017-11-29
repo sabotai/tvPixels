@@ -5,16 +5,19 @@ class Television {
   boolean evenLine, oddLine, interlaceSet;
 
   PImage tvImage;
-  float[] oldPixel = new float[19200];
-  int[] changeCount = new int[19200];
+  float[] oldPixel; 
+  int[] changeCount; 
   int changeLimit, threshold;
   //OpenCV opencv;
   int closeCount, closeMax;
   boolean closed;
 
-  Television() { // <-----default constructor
-    cols = 160;
-    rows = 120;
+  Television(int _cols, int _rows) { // <-----default constructor
+    cols = _cols;
+    rows = _rows;
+    
+    oldPixel = new float[cols * rows];
+    changeCount = new int[cols * rows];
     videoScale = 2;
     evenLine = true;
     oddLine = false;
@@ -27,6 +30,7 @@ class Television {
 
     rectMode(CENTER);
     tvImage = loadImage("tv.png");
+    tvImage.resize(cols * 6,rows * 6);
   }
 
   void init() {
@@ -169,11 +173,6 @@ if (visible) {
 
   image(tvImage, xPos - tvImage.width /8, yPos - tvImage.width/8);
 }
-/*
-  for (int i = 0; i < faces.length; i++) {
- println(faces[i].x + "," + faces[i].y);
- rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height);
- }
- */
+
 }
 }
